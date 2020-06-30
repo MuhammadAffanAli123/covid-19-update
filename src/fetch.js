@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import './App.css';
 //import Application from './select'
 import  Child from './data'
 import Select from 'react-select';
-
+import CountUp from 'react-countup';
+import Chart from './chart'
+import covid from './covid.png'
  var array = ["pak" , "india", "sri" ,"nepal"]
  const options = [];
 export default class Main extends Component {
@@ -14,7 +17,7 @@ export default class Main extends Component {
       death:"",
       recovered:"",
       selectedoption: null,
-      text:"USA"
+      text:""
     }
     this.handleInputValue = this.handleInputValue.bind(this);
    
@@ -39,8 +42,8 @@ export default class Main extends Component {
   async  componentDidMount()
   {
     
-     await fetch('https://restcountries.eu/rest/v2/all').then((res)=> res.json()).then((res2)=>{
-      res2.map((item)=>{ options.push({value:item.name , label: item.name})
+     await fetch('https://covid19.mathdro.id/api/countries').then((res)=> res.json()).then((res2)=>{
+      res2.countries.map((item)=>{ options.push({value:item.name , label: item.name})
      // console.log(options,"QQQQQ")
       })
       })
@@ -51,40 +54,21 @@ export default class Main extends Component {
   render() {
    
     return (
-      <div> 
+      <div  style={{backgroundColor:"black"}}> 
          
-         <nav className="navbar navbar-inverse">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span className="icon-bar" />
-                <span className="icon-bar" />
-                <span className="icon-bar" />                        
-              </button>
-              <a className="navbar-brand" href="#">Portfolio</a>
-            </div>
-            <div className="collapse navbar-collapse" id="myNavbar">
-              <ul className="nav navbar-nav">
-                <li className="active"><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Gallery</a></li>
-                <li><a href="#">Contact</a></li>
-              </ul>
-              <ul className="nav navbar-nav navbar-right">
-                <li><a href="#"><span className="glyphicon glyphicon-log-in" /> Login</a></li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-        <div className="jumbotron">
-          <div className="container text-center">
-            <h1>My Portfolio</h1>      
-            <p>Some text that represents "Me"...</p>
+       
+        <div className="jumbotron"  style={{ backgroundImage: `url(${covid})`, height:"80%" }}>
+          <div className="container text-center"   >
+            <h2 style={{color:"red", fontSize:55}}>COVID-19</h2>      
+            <p style={{color:"white"}}>  Over All Report
+            
+               </p>
+            
           </div>
         </div>
         <div className="container-fluid bg-3 text-center">    
          <div>
-         <h3>select country </h3>
+         <h3 style={{color:"white"}}>Select Country </h3>
       
          </div>
          <Child handleInput={this.handleInputValue}  />
@@ -94,54 +78,37 @@ export default class Main extends Component {
           <br />
           <br />
           <br />
+          <br />
+         
          
           <div className="row">
-            <div className="col-sm-3">
-              <p>Some text..</p>
-              <p>  confirmed Value: {this.state.confirmed}</p>
-              {/* <p>  confirmed Value: {this.state.selectedoption}</p> */}
-              <img src="https://placehold.it/150x80?text=IMAGE" className="img-responsive" style={{width: '100%'}} alt="Image" />
+         
+            <div className="col-sm-2" style={{border:"2px solid " ,borderBottom:"3px solid blue", marginLeft:"12%", marginTop:"5%"}}>
+             <br/>
+              <p style={{color:"blue" , fontSize:25}} >  Positive Patient  </p>
+            <br/>
+            <p  style={{color:"blue" , fontSize:25}}>
+            <CountUp end={this.state.confirmed}  start={0} duration={2} /></p>
             </div>
-            <div className="col-sm-3"> 
-              <p>Some text..</p>
-              <p>  confirmed Value: {this.state.confirmed}</p>
-              <img src="https://placehold.it/150x80?text=IMAGE" className="img-responsive" style={{width: '100%'}} alt="Image" />
+            <div className="col-sm-2" style={{border:"2px solid " , borderBottom:"3px solid red", marginLeft:"12%", marginTop:"5%"}}>
+            <br/>
+            <p  style={{color:"red" , fontSize:25}}> Death  </p>
+            <br/>
+            <p  style={{color:"red" , fontSize:25}}>
+            <CountUp end={this.state.death}  start={0} duration={2} /></p>
             </div>
-            <div className="col-sm-3"> 
-              <p>Some text..</p>
-              <p>  confirmed Value: {this.state.death}</p>
-              <img src="https://placehold.it/150x80?text=IMAGE" className="img-responsive" style={{width: '100%'}} alt="Image" />
-            </div>
-            <div className="col-sm-3">
-              <p>Some text..</p>
-             
-             <p>  confirmed Value: {this.state.recovered}</p>
-              <img src="https://placehold.it/150x80?text=IMAGE" className="img-responsive" style={{width: '100%'}} alt="Image" />
+            <div className="col-sm-2" style={{border:"2px solid " , borderBottom:"3px solid  green ", marginLeft:"12%", marginTop:"5%"}}>
+            <br/>
+            <p  style={{color:"green", fontSize:25}}> Recovered  </p>
+            <br/>
+            <p  style={{color:"green", fontSize:25}}>
+            <CountUp end={this.state.recovered}  start={0} duration={2} /></p>
             </div>
           </div>
         </div><br />
-        <div className="container-fluid bg-3 text-center">    
-          <div className="row">
-            <div className="col-sm-3">
-              <p>Some text..</p>
-              <img src="https://placehold.it/150x80?text=IMAGE" className="img-responsive" style={{width: '100%'}} alt="Image" />
-            </div>
-            <div className="col-sm-3"> 
-              <p>Some text..</p>
-              <img src="https://placehold.it/150x80?text=IMAGE" className="img-responsive" style={{width: '100%'}} alt="Image" />
-            </div>
-            <div className="col-sm-3"> 
-              <p>Some text..</p>
-              <img src="https://placehold.it/150x80?text=IMAGE" className="img-responsive" style={{width: '100%'}} alt="Image" />
-            </div>
-            <div className="col-sm-3">
-              <p>Some text..</p>
-              <img src="https://placehold.it/150x80?text=IMAGE" className="img-responsive" style={{width: '100%'}} alt="Image" />
-            </div>
-          </div>
-        </div><br /><br />
+       <br /><br />
         <footer className="container-fluid text-center">
-          <p>Footer Text</p>
+         
         </footer>
       </div>
     );

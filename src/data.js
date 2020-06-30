@@ -1,5 +1,6 @@
 import React, { Component } from 'react'; 
 import Select from 'react-select';
+import Chart from './chart'
 const options = [];
 class Child extends Component {
   constructor(props) {
@@ -9,37 +10,44 @@ class Child extends Component {
       death:  "loading ..  ",
       recovered:  "loading .. ",
       selectedoption: null,
-      text:"USA"
+      text:"Overall"
      
 
     }
    
   }
 
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption ,
+  handleChange = async (selectedOption) => {
+  await   this.setState({ selectedOption ,
       text: selectedOption.value
     });
     console.log(`Option selected:`, selectedOption.value);
     console.log("after selected1 , " , selectedOption)
     console.log(this.state.text,"text")
-  }
- 
-  // static getDerivedStateFromProps(props, state) {
-  //   return { countryname: props.countrys};
-  // }
-  
- 
-  async  componentDidMount()
-  {
-    
-     await fetch('https://restcountries.eu/rest/v2/all').then((res)=> res.json()).then((res2)=>{
-      res2.map((item)=>{ options.push({value:item.name , label: item.name})
-     // console.log(options,"QQQQQ")
-      })
-      })
 
-     await  fetch(`https://covid19.mathdro.id/api/countries/${this.state.text}`)
+    if(this.state.text=="Overall")
+    {
+      await  fetch(`https://covid19.mathdro.id/api`)
+      .then ( (res)=>  res.json() )
+      .then((res)=>  {
+          console.log(res.recovered.value , "hello")
+     this.setState({confirmed: res.confirmed.value,
+      death: res.deaths.value ,
+      recovered:res.recovered.value 
+  })
+       this.props.handleInput(this.state.death , this.state.confirmed , this.state.recovered);
+     console.log(this.state.confirmed , "this.state.death")
+    
+     
+      })
+      .catch((e)=>{
+        console.log(e ,"errorrras")
+      })
+  
+    }
+    else
+    {
+      await  fetch(`https://covid19.mathdro.id/api/countries/${this.state.text}`)
       .then ( (res)=>  res.json() )
       .then((res)=>  {
           console.log(res.recovered.value , "hello")
@@ -57,6 +65,65 @@ class Child extends Component {
       })
 
       
+    
+    }
+  
+    
+  }
+ 
+ 
+  
+ 
+  async  componentDidMount()
+  {
+    
+     await fetch('https://covid19.mathdro.id/api/countries').then((res)=> res.json()).then((res2)=>{
+      res2.countries.map((item)=>{ options.push({value:item.name , label: item.name})
+     // console.log(options,"QQQQQ")
+      })
+      })
+      if(this.state.text=="Overall")
+      {
+        await  fetch(`https://covid19.mathdro.id/api`)
+        .then ( (res)=>  res.json() )
+        .then((res)=>  {
+            console.log(res.recovered.value , "hello")
+       this.setState({confirmed: res.confirmed.value,
+        death: res.deaths.value ,
+        recovered:res.recovered.value 
+    })
+         this.props.handleInput(this.state.death , this.state.confirmed , this.state.recovered);
+       console.log(this.state.confirmed , "this.state.death")
+      
+       
+        })
+        .catch((e)=>{
+          console.log(e ,"errorrras")
+        })
+    
+      }
+      else
+      {
+        await  fetch(`https://covid19.mathdro.id/api/countries/${this.state.text}`)
+        .then ( (res)=>  res.json() )
+        .then((res)=>  {
+            console.log(res.recovered.value , "hello")
+       this.setState({confirmed: res.confirmed.value,
+        death: res.deaths.value ,
+        recovered:res.recovered.value 
+    })
+         this.props.handleInput(this.state.death , this.state.confirmed , this.state.recovered);
+       console.log(this.state.confirmed , "this.state.death")
+      
+       
+        })
+        .catch((e)=>{
+          console.log(e ,"errorrras")
+        })
+  
+        
+      
+      }
     
       
   }  
@@ -78,7 +145,13 @@ class Child extends Component {
       autoFocus={true}
      
       />
-       <h1>hellon child</h1>
+      
+     
+       <p >
+       <Chart  name={this.state.text} death={this.state.death}  confir={this.state.confirmed}  recovered={this.state.recovered}/>
+      
+       </p>
+      
        <h1>{console.log(this.props.countrys, "propssss")}</h1>
       </div>
     );
