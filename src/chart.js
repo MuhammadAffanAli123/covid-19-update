@@ -2,8 +2,8 @@ import React from 'react';
 import {Line} from 'react-chartjs-2';
 import {Bar} from 'react-chartjs-2';
 import {Pie, Doughnut} from 'react-chartjs-2';
-import  Child from './data'
-import CountUp from 'react-countup';
+// import  Child from './data'
+// import CountUp from 'react-countup';
 export default class Chart extends React.Component {
     constructor(props)
     {
@@ -14,7 +14,8 @@ export default class Chart extends React.Component {
     }
    
   render() {
-      {console.log("this.props.confir" , this.props.confir)}
+      
+        console.log("this.props.confir" , this.props.confir)
       const   state1 = {
         labels: ['positive', 'DEATH', 'recover'],
         datasets: [
@@ -61,11 +62,12 @@ export default class Chart extends React.Component {
           }
         ]
       }
-    return (
-        <div>
+    return ( 
+    
+    <div>
               
             
-      <div  className="col-sm-5" style={{border:"2px solid " ,borderBottom:"3px solid blue", marginTop:"5%" ,marginLeft:"5%"}}>
+      <div  className="col-sm-5" style={{border:"2px solid  white" ,borderBottom:" 3px solid blue", marginTop:"5%" ,marginLeft:"5%"}}>
         
       <Pie
           data={state2}
@@ -82,7 +84,7 @@ export default class Chart extends React.Component {
           }}
         />
         </div>
-        <div  className="col-sm-5" style={{border:"2px solid " ,borderBottom:"3px solid blue", marginTop:"5%", marginLeft:"1%"}}>
+        <div  className="col-sm-5" style={{border:"2px solid white " ,borderBottom:"3px solid blue", marginTop:"5%", marginLeft:"1%"}}>
         
         <Doughnut
           data={state2}
@@ -98,7 +100,7 @@ export default class Chart extends React.Component {
             }
           }}
         />
-          </div> <div  className="col-sm-5" style={{border:"2px solid " ,borderBottom:"3px solid blue",marginLeft:"5%", marginTop:"5%"}}>
+          </div> <div  className="col-sm-5" style={{border:"2px solid white " ,borderBottom:"3px solid blue",marginLeft:"5%", marginTop:"5%"}}>
         
         <Line
           data={state1}
@@ -116,7 +118,7 @@ export default class Chart extends React.Component {
           }}
         />
         </div>
-        <div  className="col-sm-5" style={{border:"2px solid " ,borderBottom:"3px solid blue", marginTop:"5%" , marginLeft:"1%"}}>
+        <div  className="col-sm-5" style={{border:"2px solid  white" ,borderBottom:"3px solid blue", marginTop:"5%" , marginLeft:"1%"}}>
          <Bar
           data={state1}
           options={{
