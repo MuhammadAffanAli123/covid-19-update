@@ -148,7 +148,7 @@ class Child extends Component {
       
      
       <h5  style={{fontSize:25 , color:"white"}}>
-         {` ${this.props.text}${""}${""}${ "statistics "}` }
+         {` ${this.props.text}${ " Statistics "}` }
        <Chart  name={this.props.text} death={this.props.death}  confir={this.props.confirmed}  recovered={this.props.recovered}/>
       
        </h5>
